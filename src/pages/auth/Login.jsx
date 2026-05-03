@@ -1,5 +1,5 @@
-import React, { useState, useRef } from "react";
-import { useAuth } from "../../contexts/AuthContext";
+import React, { useState, useRef, useEffect } from "react";
+import { useAuth } from "../../hooks/useAuth";
 import { NavLink, useLocation, useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import Error from "../../components/utilities/Error";
@@ -15,10 +15,6 @@ const Login = () => {
   const navigate = useNavigate();
   const state = location.state;
 
-  if (user && user?.email) {
-    navigate("/profile");
-  }
-
   const [error, setError] = useState(null);
   const [showPass, setShowPass] = useState(false);
   const [loginMessage, setLoginMessage] = useState(state?.message || null);
@@ -27,9 +23,17 @@ const Login = () => {
   const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
   const passRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
 
-  if (state?.message && !loginMessage) {
-    setLoginMessage(state?.message || null);
-  }
+  useEffect(() => {
+    if (user?.email) {
+      navigate("/profile", { replace: true });
+    }
+  }, [user, navigate]);
+
+  useEffect(() => {
+    if (state?.message) {
+      setLoginMessage(state.message);
+    }
+  }, [state]);
 
   const handleForm = (e) => {
     e.preventDefault();
@@ -43,7 +47,7 @@ const Login = () => {
     }
     if (!passRegex.test(password)) {
       return setError(
-        "Password must include uppercase, lowercase letters, and be at least 6 characters."
+        "Password must include uppercase, lowercase letters, and be at least 6 characters.",
       );
     }
 
@@ -78,7 +82,7 @@ const Login = () => {
         <div className="hero-content flex-col">
           <div className="card bg-base-100 w-[320px] md:w-lg lg:w-xl shadow-2xl">
             <div className="card-body">
-              <h1>Login</h1>
+              <h1 className="title-primary">Login</h1>
 
               {loginMessage && <Info message={loginMessage} />}
               {error && <Error message={error} />}

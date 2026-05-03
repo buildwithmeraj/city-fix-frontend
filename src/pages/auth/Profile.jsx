@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 import { LogOut } from "lucide-react";
 import { HiUserCircle } from "react-icons/hi";
 import { FaRegListAlt, FaHandsHelping, FaPlusCircle } from "react-icons/fa";
@@ -21,7 +21,7 @@ const Profile = () => {
     <div className="flex flex-col items-center gap-8 p-6">
       <title>Profile - CityFix</title>{" "}
       <div className="w-full max-w-md bg-base-100 border border-base-300 rounded-2xl shadow-md p-6 text-center">
-        <h1 className="mb-4">Profile</h1>
+        <h1 className="mb-4 title-primary">Profile</h1>
 
         {user?.photoURL ? (
           <img

@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
@@ -8,9 +8,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
-import { useContext } from "react";
-
-const AuthContext = createContext(null);
+import { AuthContext } from "./AuthContextBase";
 
 export const AuthProvider = ({ children }) => {
   const firebaseErrors = [
@@ -79,7 +77,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logOut = () => {
-    signOut(auth);
+    return signOut(auth);
   };
 
   useEffect(() => {
@@ -104,8 +102,4 @@ export const AuthProvider = ({ children }) => {
     loading,
   };
   return <AuthContext value={authData}>{children}</AuthContext>;
-};
-
-export const useAuth = () => {
-  return useContext(AuthContext);
 };

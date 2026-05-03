@@ -58,7 +58,7 @@ const AllIssues = () => {
       return;
     }
     const filtered = issues.filter((i) =>
-      i.title.toLowerCase().includes(query)
+      i.title.toLowerCase().includes(query),
     );
     setIssues(filtered);
   };
@@ -117,11 +117,16 @@ const AllIssues = () => {
           <option value="ended">Ended</option>
         </select>
       </div>
-      <h2>All Issues{issues.length === 0 ? "" : ` (${issues.length})`}</h2>
+      <h2>
+        All{" "}
+        <span className="title-primary">
+          Issues{issues.length === 0 ? "" : ` (${issues.length})`}
+        </span>
+      </h2>
 
       {issues.length === 0 ? (
         <div className="flex flex-col items-center justify-center min-h-[40vh]">
-          <p className="flex flex-col items-center justify-center w-full max-w-md bg-base-100 border border-base-300 rounded-2xl shadow-md p-6 text-center">
+          <div className="flex flex-col items-center justify-center w-full max-w-md bg-base-100 border border-base-300 rounded-2xl shadow-md p-6 text-center">
             <TriangleAlert size={70} className="text-gray-500 text-center" />
             <p className="text-2xl text-base-content/70">No Issue found.</p>
             <div className="mt-4">
@@ -130,7 +135,7 @@ const AllIssues = () => {
                 Report an Issue
               </Link>
             </div>
-          </p>
+          </div>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

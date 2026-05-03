@@ -1,5 +1,6 @@
 import React from "react";
 import { Fade } from "react-awesome-reveal";
+import { BiMessageAltError } from "react-icons/bi";
 
 const Categories = () => {
   const categories = [
@@ -31,7 +32,9 @@ const Categories = () => {
 
   return (
     <div className="py-4 lg:py-6">
-      <h2>Categories</h2>
+      <h2>
+        Issues <span className="title-primary">Categories</span>
+      </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {categories.map((cat, idx) => (
@@ -45,13 +48,17 @@ const Categories = () => {
                 />
               </div>
 
-              <div className="p-5 space-y-3">
+              <div className="p-5 space-y-3 relative">
                 <h3 className="font-semibold text-lg text-base-content">
                   {cat.title}
                 </h3>
-                <p className="text-sm text-base-content/70">
+                <p className="text-sm text-base-content/70 pr-18">
                   {cat.description}
                 </p>
+                <BiMessageAltError
+                  className="title-primary opacity-25 absolute top-4 right-1"
+                  size={100}
+                />
               </div>
             </div>
           </Fade>

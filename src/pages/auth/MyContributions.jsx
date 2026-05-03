@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import axiosInstance from "../../hooks/axiosInstance";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { Link } from "react-router";
@@ -16,7 +16,7 @@ const MyContributions = () => {
   const fetchContributions = async () => {
     try {
       const response = await axiosInstance.get(
-        `/contributions?email=${user?.email}`
+        `/contributions?email=${user?.email}`,
       );
       setContributions(response.data);
     } catch (error) {
@@ -67,7 +67,7 @@ const MyContributions = () => {
       <title>My Contributions - CityFix</title>
       <div className="px-2 md:px-4 lg:px-8">
         <h2>
-          My Contributions
+          My <span className="title-primary">Contributions</span>
           {contributions.length === 0 ? "" : ` (${contributions.length})`}
         </h2>
 

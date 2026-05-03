@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import axiosInstance from "../../hooks/axiosInstance";
 import Loading from "../../components/utilities/Loading";
 import { Link } from "react-router";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 import { TriangleAlert, Plus } from "lucide-react";
 
 const MyIssues = () => {
@@ -104,12 +104,15 @@ const MyIssues = () => {
     <div className="px-2 md:px-4 lg:px-8">
       <title>My Issues - CityFix</title>
       <h2>
-        My Reported Issues{issues.length === 0 ? "" : ` (${issues.length})`}
+        My Reported{" "}
+        <span className="title-primary">
+          Issues{issues.length === 0 ? "" : ` (${issues.length})`}
+        </span>
       </h2>
 
       {issues.length === 0 ? (
         <div className="flex flex-col items-center justify-center min-h-[50vh]">
-          <p className="flex flex-col items-center justify-center w-full max-w-md bg-base-100 border border-base-300 rounded-2xl shadow-md p-6 text-center">
+          <div className="flex flex-col items-center justify-center w-full max-w-md bg-base-100 border border-base-300 rounded-2xl shadow-md p-6 text-center">
             <TriangleAlert size={70} className="text-gray-500 text-center" />
             <p className="text-2xl text-base-content/70">
               You don't have any issues reported.
@@ -120,7 +123,7 @@ const MyIssues = () => {
                 Report an Issue
               </Link>
             </div>
-          </p>
+          </div>
         </div>
       ) : (
         <div className="relative overflow-x-auto shadow-lg sm:rounded-lg bg-base-100 border border-base-300">

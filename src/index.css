@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes: nord --default, dim --prefersdark;
+  themes:
+    nord --default,
+    dim --prefersdark;
 }
 
 @plugin "daisyui/theme" {
@@ -118,4 +120,8 @@ h1 {
 .swiper {
   margin-left: auto;
   margin-right: auto;
+}
+
+.title-primary {
+  color: #fc785e;
 }

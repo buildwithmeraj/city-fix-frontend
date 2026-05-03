@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, NavLink } from "react-router";
 import logo from "../assets/logo.png";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../hooks/useAuth";
 import { HiUserCircle } from "react-icons/hi2";
 import ThemeSwitcher from "../components/utilities/ThemeSwitcher";
 import toast from "react-hot-toast";
@@ -20,13 +20,19 @@ const NavBar = () => {
   const navLinks = (
     <>
       <li className="list-none">
-        <NavLink to="/">Home</NavLink>
+        <NavLink to="/" className="hover:text-[#FC785E]">
+          Home
+        </NavLink>
       </li>
       <li className="list-none">
-        <NavLink to="/issues">Issues</NavLink>
+        <NavLink to="/issues" className="hover:text-[#FC785E]">
+          Issues
+        </NavLink>
       </li>
       <li className="list-none">
-        <NavLink to="/report-issue">Report Issue</NavLink>
+        <NavLink to="/report-issue" className="hover:text-[#FC785E]">
+          Report Issue
+        </NavLink>
       </li>
     </>
   );
@@ -73,9 +79,12 @@ const NavBar = () => {
           </Link>
         </div>
 
-        <div className="navbar-end gap-4">
+        <div className="navbar-center hidden lg:flex">
+          {" "}
           <div className="hidden md:flex gap-6 font-medium">{navLinks}</div>
+        </div>
 
+        <div className="navbar-end gap-4">
           {user ? (
             <>
               <NavLink to="/my-issues" className="hidden md:block">

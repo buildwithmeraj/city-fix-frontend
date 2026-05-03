@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 import axiosInstance from "../../hooks/axiosInstance";
 
@@ -13,8 +13,8 @@ const AddIssue = () => {
       try {
         const response = await axiosInstance.get("/categories");
         setCategories(response.data);
-      } catch (error) {
-        toast.error("Failed to load categories: ", error.message);
+      } catch {
+        toast.error("Failed to load categories.");
       } finally {
         setLoading(false);
       }
@@ -36,7 +36,7 @@ const AddIssue = () => {
     const date = new Date().toISOString();
     const email = user?.email || "";
 
-    if (!title || !category || !location || !description || !image || !amount) {
+    if (!title || !category || !location || !description) {
       toast.error("Please fill in all required fields.");
       return;
     }
@@ -66,7 +66,9 @@ const AddIssue = () => {
   return (
     <div className="max-w-2xl mx-auto p-6 bg-base-100 shadow-md rounded-md">
       <title>Report Issue - CityFix</title>
-      <h1 className="mb-4">Report an Issue</h1>
+      <h1 className="mb-4">
+        Report an <span className="title-primary">Issue</span>
+      </h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="label font-medium">Issue Title</label>

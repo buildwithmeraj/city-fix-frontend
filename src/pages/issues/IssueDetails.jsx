@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 import axiosInstance from "../../hooks/axiosInstance";
 import toast from "react-hot-toast";
 import Loading from "../../components/utilities/Loading";
@@ -81,7 +81,7 @@ const IssueDetails = () => {
   if (!issue)
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh]">
-        <p className="flex flex-col items-center justify-center w-full max-w-md bg-base-100 border border-base-300 rounded-2xl shadow-md p-6 text-center">
+        <div className="flex flex-col items-center justify-center w-full max-w-md bg-base-100 border border-base-300 rounded-2xl shadow-md p-6 text-center">
           <TriangleAlert size={70} className="text-gray-500 text-center" />
           <p className="text-2xl text-base-content/70">Issue not found.</p>
           <div className="mt-4">
@@ -94,7 +94,7 @@ const IssueDetails = () => {
               Report first issue
             </Link>
           </div>
-        </p>
+        </div>
       </div>
     );
 

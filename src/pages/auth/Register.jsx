@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 import { NavLink, useNavigate, useLocation } from "react-router";
 import toast from "react-hot-toast";
 import Error from "../../components/utilities/Error";
@@ -19,13 +19,9 @@ const Register = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  if (user && user?.email) {
-    navigate("/profile");
-  }
-
   useEffect(() => {
     if (user && user.email) {
-      navigate(location.state ? location.state : "/");
+      navigate(location.state?.from || "/", { replace: true });
     }
   }, [user, location.state, navigate]);
 
@@ -48,7 +44,7 @@ const Register = () => {
     }
     if (!passRegex.test(password)) {
       return setError(
-        "Password Must have at least one uppercase letter, one lowercase letter and at least 6 characters long"
+        "Password Must have at least one uppercase letter, one lowercase letter and at least 6 characters long",
       );
     }
 
@@ -63,14 +59,14 @@ const Register = () => {
         setUser(userCredential.user);
         updateUserProfile({ displayName, photoURL });
         toast.success("Registration Successful, Redirecting to Homepage...");
-        setInterval(() => {
+        setTimeout(() => {
           window.location.href = "/";
         }, 2000);
       })
       .catch((error) => {
-        const errMsg = firebaseErrors.find(
-          (err) => err.code === error.code
-        ).message;
+        const errMsg =
+          firebaseErrors.find((err) => err.code === error.code)?.message ||
+          "Registration failed. Please try again.";
         setError(errMsg);
       });
   };
@@ -79,7 +75,7 @@ const Register = () => {
       .then((result) => {
         setUser(result.user);
         toast.success("Conneccted with Google, Redirecting to Homepage...");
-        setInterval(() => {
+        setTimeout(() => {
           window.location.href = "/";
         }, 2000);
       })
@@ -98,7 +94,7 @@ const Register = () => {
         <div className="hero-content flex-col">
           <div className="card bg-base-100 w-[320px] md:w-lg lg:w-xl shadow-2xl">
             <div className="card-body">
-              <h1>Register</h1>
+              <h1 className="title-primary">Register</h1>
               {error && <Error message={error} />}
               <fieldset className="fieldset">
                 <label className="label">Email</label>
@@ -142,6 +138,7 @@ const Register = () => {
                   href="https://imgbb.com"
                   className="link link-hover flex items-center ml-1 mt-2 gap-2"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   <ExternalLink size={18} />
                   Upload a Photo

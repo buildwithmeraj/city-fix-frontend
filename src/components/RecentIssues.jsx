@@ -13,7 +13,7 @@ const RecentIssues = () => {
   useEffect(() => {
     const fetchIssues = async () => {
       try {
-        const response = await axiosInstance.get("/issues?limit=6");
+        const response = await axiosInstance.get("/issues?limit=8");
         setIssues(response.data);
       } catch (error) {
         toast.error("Failed to load issues: ", error.message);
@@ -27,19 +27,21 @@ const RecentIssues = () => {
 
   return (
     <div className="mt-10">
-      <h2>Recent Issues </h2>
+      <h2>
+        Recent <span className="title-primary">Issues</span>
+      </h2>
       {loading ? (
         <Loading />
       ) : issues.length === 0 ? (
         <p className="text-center text-gray-500">No issues found.</p>
       ) : (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {issues.map((issue) => (
               <Fade key={issue._id} cascade>
                 <div className="flex flex-col rounded-xl border border-base-300 bg-base-100 hover:bg-base-200 transition-all duration-300 shadow-sm hover:shadow-md overflow-hidden h-full">
                   {issue.image && (
-                    <div className="relative w-full h-48 overflow-hidden flex-shrink-0">
+                    <div className="relative w-full h-48 overflow-hidden shrink-0">
                       <img
                         src={issue.image}
                         alt={issue.title}
@@ -48,9 +50,9 @@ const RecentIssues = () => {
                     </div>
                   )}
 
-                  <div className="flex flex-col justify-between flex-grow p-5 space-y-3">
+                  <div className="flex flex-col justify-between grow p-5 space-y-3">
                     <div>
-                      <h3 className="font-semibold text-lg text-base-content line-clamp-2 mb-2">
+                      <h3 className="font-semibold text-lg text-base-content line-clamp-1 mb-2">
                         {issue.title}
                       </h3>
                       <p className="truncate my-4">{issue.description}</p>{" "}
@@ -67,7 +69,7 @@ const RecentIssues = () => {
                       </div>
                     </div>
 
-                    <div className="pt-3">
+                    <div className="pt-1">
                       <Link
                         to={`/issue/${issue._id}`}
                         className="btn btn-primary flex items-center gap-2 w-full"
